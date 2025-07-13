@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useMobile } from '@/hooks/use-mobile'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {

@@ -20,26 +20,27 @@ const menuItems = [
     url: "/",
     icon: Home,
   },
-  {
-    title: "Gastos",
-    url: "/gastos",
-    icon: TrendingDown,
-  },
-  {
-    title: "Lucros",
-    url: "/lucros",
-    icon: TrendingUp,
-  },
-  {
-    title: "Transações",
-    url: "/transacoes",
-    icon: Receipt,
-  },
-  {
-    title: "Relatórios",
-    url: "/relatorios",
-    icon: FileText,
-  },
+  // Temporariamente comentado - outras abas
+  // {
+  //   title: "Gastos",
+  //   url: "/gastos",
+  //   icon: TrendingDown,
+  // },
+  // {
+  //   title: "Lucros",
+  //   url: "/lucros",
+  //   icon: TrendingUp,
+  // },
+  // {
+  //   title: "Transações",
+  //   url: "/transacoes",
+  //   icon: Receipt,
+  // },
+  // {
+  //   title: "Relatórios",
+  //   url: "/relatorios",
+  //   icon: FileText,
+  // },
 ]
 
 export function AppSidebar() {
