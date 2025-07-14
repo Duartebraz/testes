@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2, MessageCircle } from 'lucide-react'
+import { Loader2, MessageCircle, Eye, EyeOff } from 'lucide-react'
 import { RegisterForm } from './register-form'
 import { VerificationForm } from './verification-form'
 
@@ -15,7 +15,8 @@ type AuthStep = 'login' | 'register' | 'verification'
 
 export function LoginForm() {
   const [phone, setPhone] = useState('')
-  const [code, setCode] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState<AuthStep>('login')
   const [pendingPhone, setPendingPhone] = useState('')
@@ -43,14 +44,14 @@ export function LoginForm() {
       return
     }
 
-    if (!code.trim() || code.length !== 6) {
-      setError('Por favor, informe o código de 6 dígitos')
+    if (!password.trim()) {
+      setError('Por favor, informe sua senha')
       return
     }
 
-    const success = await login(phone, code)
+    const success = await login(phone, password)
     if (!success) {
-      setError('WhatsApp ou código incorretos')
+      setError('WhatsApp ou senha incorretos')
     }
   }
 
@@ -97,10 +98,10 @@ export function LoginForm() {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold text-center">
-            WhatsApp Login
+            Login
           </CardTitle>
           <CardDescription className="text-center">
-            Entre com seu WhatsApp e código de verificação
+            Entre com seu WhatsApp e senha
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,20 +120,31 @@ export function LoginForm() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="code">Código de Verificação</Label>
-              <Input
-                id="code"
-                type="text"
-                placeholder="000000"
-                value={code}
-                onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                disabled={isLoading}
-                className="text-center tracking-widest"
-                maxLength={6}
-              />
-              <p className="text-xs text-muted-foreground">
-                Código enviado via WhatsApp
-              </p>
+              <Label htmlFor="password">Senha</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Sua senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
             </div>
 
             {error && (
@@ -170,7 +182,7 @@ export function LoginForm() {
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-800 font-medium">Teste:</p>
             <p className="text-sm text-blue-600">WhatsApp: (11) 99999-9999</p>
-            <p className="text-sm text-blue-600">Código: 123456</p>
+            <p className="text-sm text-blue-600">Senha: 123456</p>
           </div>
         </CardContent>
       </Card>

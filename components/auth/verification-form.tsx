@@ -155,19 +155,38 @@ export function VerificationForm({ phone, onBackToRegister }: VerificationFormPr
             </Button>
           </form>
 
-          <div className="mt-4 text-center">
+          <div className="mt-4 text-center space-y-2">
             {canResend ? (
-              <Button
-                variant="link"
-                onClick={handleResendCode}
-                className="text-sm"
-              >
-                Reenviar código
-              </Button>
+              <>
+                <Button
+                  variant="link"
+                  onClick={handleResendCode}
+                  className="text-sm"
+                >
+                  Reenviar código
+                </Button>
+                <br />
+                <Button
+                  variant="link"
+                  onClick={onBackToRegister}
+                  className="text-sm text-muted-foreground"
+                >
+                  Não recebeu o código?
+                </Button>
+              </>
             ) : (
-              <p className="text-sm text-muted-foreground">
-                Reenviar código em {countdown}s
-              </p>
+              <>
+                <p className="text-sm text-muted-foreground">
+                  Reenviar código em {countdown}s
+                </p>
+                <Button
+                  variant="link"
+                  onClick={onBackToRegister}
+                  className="text-sm text-muted-foreground"
+                >
+                  Não recebeu o código?
+                </Button>
+              </>
             )}
           </div>
 

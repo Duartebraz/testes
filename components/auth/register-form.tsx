@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Loader2, ArrowLeft } from 'lucide-react'
+import { Loader2, ArrowLeft, Eye, EyeOff } from 'lucide-react'
 
 interface RegisterFormProps {
   onBackToLogin: () => void
@@ -16,6 +16,9 @@ interface RegisterFormProps {
 export function RegisterForm({ onBackToLogin, onRegisterSuccess }: RegisterFormProps) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -46,6 +49,16 @@ export function RegisterForm({ onBackToLogin, onRegisterSuccess }: RegisterFormP
 
     if (!phone.trim() || phone.replace(/\D/g, '').length !== 11) {
       setError('Por favor, informe um telefone válido com DDD')
+      return
+    }
+
+    if (!password.trim() || password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres')
+      return
+    }
+
+    if (password !== confirmPassword) {
+      setError('As senhas não coincidem')
       return
     }
 
@@ -115,6 +128,46 @@ export function RegisterForm({ onBackToLogin, onRegisterSuccess }: RegisterFormP
               <p className="text-xs text-muted-foreground">
                 Enviaremos um código de verificação via WhatsApp
               </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Senha</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Mínimo 6 caracteres"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="Digite a senha novamente"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                disabled={isLoading}
+              />
             </div>
 
             {error && (

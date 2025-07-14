@@ -12,7 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null
   isLoading: boolean
-  login: (phone: string, code: string) => Promise<boolean>
+  login: (phone: string, password: string) => Promise<boolean>
   logout: () => void
   isAuthenticated: boolean
 }
@@ -32,14 +32,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false)
   }, [])
 
-  const login = async (phone: string, code: string): Promise<boolean> => {
+  const login = async (phone: string, password: string): Promise<boolean> => {
     setIsLoading(true)
     
     try {
-      // Simulação de login via WhatsApp - substitua pela sua API
+      // Simulação de login via WhatsApp + senha - substitua pela sua API
       const cleanPhone = phone.replace(/\D/g, '')
       
-      if (cleanPhone === '11999999999' && code === '123456') {
+      if (cleanPhone === '11999999999' && password === '123456') {
         const userData: User = {
           id: cleanPhone,
           name: 'Usuário WhatsApp',
